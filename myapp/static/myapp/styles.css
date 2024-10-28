@@ -278,3 +278,22 @@ a:hover {
     .reset-btn:hover {
         background-color: #0b3103; /* Darker red on hover */
     }
+    .home-button-container {
+        margin-top: 20px; /* Space above the button */
+        text-align: center; /* Center the button */
+    }
+    
+    .home-btn {
+        background-color: #0ec067; /* Bootstrap primary color */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .home-btn:hover {
+        background-color: #04521a; /* Darker shade on hover */
+    }
+    

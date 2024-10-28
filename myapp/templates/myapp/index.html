@@ -77,6 +77,11 @@
                 </table>
             </div>
         </div>
+
+        <!-- Home Button to reset the page -->
+        <div class="home-button-container">
+            <button class="home-btn" onclick="resetPage()">Home</button>
+        </div>
     </div>
 </div>
 
@@ -109,6 +114,17 @@
         document.getElementById('end_date').value = '';
     }
 
+    function resetPage() {
+        // Reset date fields
+        resetDateFields();
+
+        // Hide results container
+        document.getElementById('resultsContainer').style.display = 'none';
+
+        // Hide loading message
+        document.getElementById('loadingMessage').style.display = 'none';
+    }
+
     // Once the page loads, check if there are results and show the results container
     window.onload = function() {
         {% if abovenifty50_final or belownifty50_final %}
@@ -117,6 +133,5 @@
         {% endif %}
     };
 </script>
-
 
 {% endblock content %}
