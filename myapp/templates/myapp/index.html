@@ -12,6 +12,14 @@
             <label for="end_date">End Date:</label>
             <input type="date" id="end_date" name="end_date" required>
         </div>
+        <div class="button-group">
+            <button type="button" class="time-button" onclick="setDateRange(7)">1 Week</button>
+            <button type="button" class="time-button" onclick="setDateRange(30)">1 Month</button>
+            <button type="button" class="time-button" onclick="setDateRange(90)">3 Months</button>
+            <button type="button" class="time-button" onclick="setDateRange(180)">6 Months</button>
+            <button type="button" class="time-button" onclick="setDateRange(365)">1 Year</button>
+            <button type="button" class="reset-btn" onclick="resetDateFields()">Reset</button>
+        </div>
         <button type="submit" class="submit-btn">Analyze</button>
     </form>
 
@@ -30,14 +38,14 @@
                         <tr>
                             <th>Company</th>
                             <th>Percentage Change</th>
-                            <th>TV chart</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for company in abovenifty50_final %}
                         <tr>
                             <td>{{ company.Company }}</td>
-                            <td>{{ company.PercentageChange|floatformat:2  }}%</td>
+                            <td>{{ company.PercentageChange|floatformat:2 }}%</td>
                             <td><a href="{{ company.Links }}" target="_blank">Details</a></td>
                         </tr>
                         {% endfor %}
@@ -61,8 +69,8 @@
                         {% for company in belownifty50_final %}
                         <tr>
                             <td>{{ company.Company }}</td>
-                            <td>{{ company.PercentageChange|floatformat:2  }}%</td>
-                            <td><a href="{{ company.Links }}">TV chart</a></td>
+                            <td>{{ company.PercentageChange|floatformat:2 }}%</td>
+                            <td><a href="{{ company.Links }}" target="_blank">Details</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -81,6 +89,26 @@
         document.getElementById('resultsContainer').style.display = 'none';
     }
 
+    function setDateRange(days) {
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
+
+        // Calculate the start and end dates
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - days);
+
+        // Format dates as YYYY-MM-DD
+        startDateInput.value = startDate.toISOString().split('T')[0];
+        endDateInput.value = endDate.toISOString().split('T')[0];
+    }
+
+    function resetDateFields() {
+        // Clear the date input fields
+        document.getElementById('start_date').value = '';
+        document.getElementById('end_date').value = '';
+    }
+
     // Once the page loads, check if there are results and show the results container
     window.onload = function() {
         {% if abovenifty50_final or belownifty50_final %}
@@ -89,4 +117,6 @@
         {% endif %}
     };
 </script>
+
+
 {% endblock content %}
