@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Dashboard</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Stock Market Dashboard</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/stocks">Stocks</a>
+            <a href="/about">About</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content">
+        {% block content %}
+        <!-- Content will go here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Stock Market Project. All rights reserved.</p>
+    </footer>
+</body>
+</html>

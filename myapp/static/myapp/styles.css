@@ -1,0 +1,36 @@
+/* Basic styling for stock market project */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #004080;
+    color: white;
+    padding: 5px 10px;  /* Reduced horizontal padding */
+    text-align: center;
+}
+
+nav a {
+    margin: 0 10px;  /* Reduced margin between navigation links */
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    padding: 20px;
+}
+
+footer {
+    background-color: #f1f1f1;
+    padding: 5px;  /* Reduced padding */
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

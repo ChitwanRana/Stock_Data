@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Analysis</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+
+</head>
+<body>
+    <header>
+        <h1>Stock Analysis</h1>
+    </header>
+
+    <div class="content">
+        <form method="post">
+            {% csrf_token %}
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+
+        <h2>Above Nifty50:</h2>
+        <ul>
+            {% for company in abovenifty50_final %}
+            <li>{{ company.Company }} - {{ company.PercentageChange }}------{{company.Links}}%</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Below Nifty50:</h2>
+        <ul>
+            {% for company in belownifty50_final %}
+            <li>{{ company.Company }} - {{ company.PercentageChange }}%</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Stock Analysis</p>
+    </footer>
+</body>
+</html>
