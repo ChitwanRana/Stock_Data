@@ -1,52 +1,92 @@
+{% extends "myapp/base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock Analysis</title>
-    {% load static %}
-
-    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
-
-</head>
-<body>
-    <header>
-        <h1>Stock Analysis</h1>
-    </header>
-
-    <div class="content">
-        <form method="post">
-            {% csrf_token %}
+{% block content %}
+<div class="content">
+    <form method="post" onsubmit="showLoadingMessage()">
+        {% csrf_token %}
+        <div class="form-group">
             <label for="start_date">Start Date:</label>
             <input type="date" id="start_date" name="start_date" required>
-
+        </div>
+        <div class="form-group">
             <label for="end_date">End Date:</label>
             <input type="date" id="end_date" name="end_date" required>
+        </div>
+        <button type="submit" class="submit-btn">Analyze</button>
+    </form>
 
-            <button type="submit">Analyze</button>
-        </form>
-
-        {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-        {% endif %}
-
-        <h2>Above Nifty50:</h2>
-        <ul>
-            {% for company in abovenifty50_final %}
-            <li>{{ company.Company }} - {{ company.PercentageChange }}------{{company.Links}}%</li>
-            {% endfor %}
-        </ul>
-
-        <h2>Below Nifty50:</h2>
-        <ul>
-            {% for company in belownifty50_final %}
-            <li>{{ company.Company }} - {{ company.PercentageChange }}%</li>
-            {% endfor %}
-        </ul>
+    <!-- Loading message overlay -->
+    <div id="loadingMessage" class="loading-overlay" style="display: none;">
+        <button class="analyzing-btn" disabled>Analyzing...</button>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Stock Analysis</p>
-    </footer>
-</body>
-</html>
+    <!-- Results container, hidden until form submission -->
+    <div id="resultsContainer" class="results-container" style="display: none;">
+        <div class="card">
+            <h2>Above Nifty50</h2>
+            <div class="card-content">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Percentage Change</th>
+                            <th>TV chart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for company in abovenifty50_final %}
+                        <tr>
+                            <td>{{ company.Company }}</td>
+                            <td>{{ company.PercentageChange|floatformat:2  }}%</td>
+                            <td><a href="{{ company.Links }}" target="_blank">Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Below Nifty50</h2>
+            <div class="card-content">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Percentage Change</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for company in belownifty50_final %}
+                        <tr>
+                            <td>{{ company.Company }}</td>
+                            <td>{{ company.PercentageChange|floatformat:2  }}%</td>
+                            <td><a href="{{ company.Links }}">TV chart</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showLoadingMessage() {
+        // Show the loading overlay
+        document.getElementById('loadingMessage').style.display = 'flex';
+
+        // Hide the results container until the results are ready
+        document.getElementById('resultsContainer').style.display = 'none';
+    }
+
+    // Once the page loads, check if there are results and show the results container
+    window.onload = function() {
+        {% if abovenifty50_final or belownifty50_final %}
+            document.getElementById('resultsContainer').style.display = 'flex';
+            document.getElementById('loadingMessage').style.display = 'none';
+        {% endif %}
+    };
+</script>
+{% endblock content %}
