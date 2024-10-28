@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="content">
-    <form method="post" onsubmit="showLoadingMessage()">
+    <form method="post" onsubmit="showLoadingMessage(event)">
         {% csrf_token %}
         <div class="form-group">
             <label for="start_date">Start Date:</label>
@@ -25,7 +25,8 @@
 
     <!-- Loading message overlay -->
     <div id="loadingMessage" class="loading-overlay" style="display: none;">
-        <button class="analyzing-btn" disabled>Analyzing...</button>
+        <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+        <div class="loading-text" id="loadingText">Loading... 0%</div>
     </div>
 
     <!-- Results container, hidden until form submission -->
@@ -86,12 +87,30 @@
 </div>
 
 <script>
-    function showLoadingMessage() {
-        // Show the loading overlay
+    function showLoadingMessage(event) {
+        event.preventDefault(); // Prevent the default form submission
         document.getElementById('loadingMessage').style.display = 'flex';
-
-        // Hide the results container until the results are ready
         document.getElementById('resultsContainer').style.display = 'none';
+
+        let progressBar = document.getElementById('progressBar');
+        let loadingText = document.getElementById('loadingText');
+        let progress = 0;
+
+        // Simulate loading progress
+        let interval = setInterval(() => {
+            progress += 10; // Increment the progress by 10
+            if (progress <= 100) {
+                progressBar.style.width = progress + '%';
+                loadingText.innerText = 'Loading... ' + progress + '%';
+            }
+
+            // Once progress reaches 100, stop the interval
+            if (progress === 100) {
+                clearInterval(interval);
+                // After the loading completes, submit the form
+                event.target.submit(); // Submit the form
+            }
+        }, 100); // Change 100 to adjust the speed of loading (in milliseconds)
     }
 
     function setDateRange(days) {
@@ -133,5 +152,6 @@
         {% endif %}
     };
 </script>
+
 
 {% endblock content %}
