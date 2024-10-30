@@ -25,7 +25,8 @@ SECRET_KEY = '71gng8tf+vv=s0#p1(5pp3btnkbk+c$(3ug_cy6aw+av-wrobf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stock-data-jti4.onrender.com']
+ALLOWED_HOSTS = ['stock-data-74g3.onrender.com', 'stock-data-jti4.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 
