@@ -2,3 +2,4 @@ venv/
 .vs/
 ~$*.xlsx
 Stock/
+staticfiles/
