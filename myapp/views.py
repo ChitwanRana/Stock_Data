@@ -72,3 +72,13 @@ def index(request):
         'belownifty50_final': belownifty50_final,
         'error_message': error_message,
     })
+
+
+def Data(request):
+    return render(request,'myapp/Data.html')
+
+def Ratio(request):
+    return render(request,'myapp/Ratio.html')
+
+def Contact(request):
+    return render(request,'myapp/Contact.html')

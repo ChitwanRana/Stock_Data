@@ -337,13 +337,54 @@ a:hover {
         margin-top: 10px;
         font-size: 20px;
     }
+
+    .header {
+        padding: 20px;
+        background-color: #45a049; /* light gray for a clean header */
+        border-bottom: 1px solid #ddd; /* subtle border at the bottom */
+    }
+    
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .header-title {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .header-links a {
+        margin-left: 15px;
+        text-decoration: none;
+        color: #0b3103; /* change color as needed */
+    }
+    
+    .header-links a:hover {
+        color: #146d17; /* hover effect */
+        font-size:20px;
+    }
+    
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <h1>Stock Market Dashboard</h1>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title" style="margin-right:3rem;">Stock Market Dashboard</h1>
+            <nav class="header-links">
+                <a href="/">Nifty Comaprison </a>
+                <a href="{% url 'Data'%}">Live Data</a>
+                <a href="{% url 'Ratio'%}">A/D Ratio</a>
+                <a href="{% url 'Contact' %}">Contact</a>
+            </nav>
+        </div>
     </header>
+
+    <!-- Your other page content -->
+
+
 
     <!-- Main Content -->
     <div class="content">
